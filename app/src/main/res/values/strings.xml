@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Quiz App</string>
+    <string name="question">Questions</string>
+    <string name="baseHeading">Welcome to The Test</string>
+    <string name="start">Start</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="score">Score: %d</string>
+</resources>
