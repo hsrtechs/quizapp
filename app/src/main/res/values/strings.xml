@@ -1,11 +1,25 @@
 <resources>
     <string name="app_name">Quiz App</string>
     <string name="question">Questions</string>
-    <string name="baseHeading">Welcome to The Test</string>
+    <string name="baseHeading">Please fill the form below</string>
     <string name="start">Start</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="score">Score: %d</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="score" formatted="false">
+        Name: %s\nGender: %s\nInterested in: %s\nAnswer: %d
+    </string>
+    <string name="question1">What is your Gender ?</string>
+    <string name="question2">Whom you are interested in ?</string>
+    <string name="question3">What is Your Name ?</string>
+    <string name="question4">What is the value of 9 – 6 ?</string>
+    <string name="submit">Submit</string>
+    <string name="question4hint">Enter Your Age</string>
+    <string name="answers">Answers</string>
+    <string name="answer4">4</string>
+    <string-array name="errors">
+        <item>Please select your gender.</item>
+        <item>Please enter your interest.</item>
+        <item>Please enter your name.</item>
+        <item>Please check the calculation.</item>
+    </string-array>
 </resources>

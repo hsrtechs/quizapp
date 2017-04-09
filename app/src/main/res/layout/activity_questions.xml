@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="net.hsrtech.quizapp.Questions">
@@ -9,83 +10,204 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/baseHeading"
             style="@style/heading1"
-            android:layout_marginBottom="@dimen/fifty" />
-
-        <TextView
-            android:id="@+id/question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/heading2"
-            android:layout_margin="3dp"
-            tools:hint="@string/question" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/fifty">
-
-
-            <Button
-                android:id="@+id/no"
-                style="@style/buttonPrimary"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="submitAnswer"
-                android:text="@string/no" />
-
-            <Button
-                android:id="@+id/yes"
-                style="@style/buttonPrimary"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="submitAnswer"
-                android:text="@string/yes" />
-
-        </LinearLayout>
-
+            android:text="@string/baseHeading" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/colorBack"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            tools:hint="@string/question" />
-
-        <Button
-            android:id="@+id/previous"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            style="@style/buttonPrimary"
-            android:onClick="previous"
-            android:text="@string/previous" />
-
+            android:layout_marginTop="10dp"
+            android:background="@color/colorBack" />
 
         <TextView
+            android:id="@+id/scoreHead"
+            style="@style/heading2"
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/colorBack"
-            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:text="@string/answers"
+            android:visibility="gone"
             tools:hint="@string/question" />
 
         <TextView
             android:id="@+id/score"
+            style="@style/heading2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/heading2"
+            android:visibility="gone"
+            android:textAlignment="textStart" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            tools:hint="@string/question" />
+            android:background="@color/colorBack" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/question3"
+                style="@style/heading2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="@string/question3"
+                tools:hint="@string/question" />
+
+            <EditText
+                android:id="@+id/question3answer"
+                style="@style/buttonPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorBack" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/question1"
+                style="@style/heading2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="@string/question1"
+                tools:hint="@string/question" />
+
+            <RadioGroup
+                android:id="@+id/radioSex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioMale"
+                    style="@style/buttonPrimary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/male" />
+
+                <RadioButton
+                    android:id="@+id/radioFemale"
+                    style="@style/buttonPrimary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/female" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorBack" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/question2"
+                style="@style/heading2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="@string/question2"
+                tools:hint="@string/question" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkbox1"
+                    style="@style/buttonPrimary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/male" />
+
+                <CheckBox
+                    android:id="@+id/checkbox2"
+                    style="@style/buttonPrimary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/female" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorBack" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/question4"
+                style="@style/heading2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:labelFor="@id/question3answer"
+                android:text="@string/question4"
+                tools:hint="@string/question" />
+
+            <EditText
+                android:id="@+id/question4answer"
+                style="@style/buttonPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorBack" />
+
+        <Button
+            style="@style/buttonPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="submit"
+            android:text="@string/submit" />
 
     </LinearLayout>
 

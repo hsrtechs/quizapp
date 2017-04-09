@@ -2,146 +2,187 @@ package net.hsrtech.quizapp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class Questions extends AppCompatActivity {
 
-    private String[] questions;
-    private int questionNumber = 0;
-    private int score = 0;
+    private RadioButton radioMale;
+    private RadioButton radioFeMale;
 
-    private TextView questionTextView;
-    private TextView scoreTextView;
+    private CheckBox checkbox1;
+    private CheckBox checkbox2;
 
-    private boolean[] answers;
-    private boolean[] correctAnswers;
+    private TextView question3;
+    private TextView question4;
+    private TextView score;
 
+    private TextView scoreHead;
+
+    private ScrollView scrollView;
+
+    private Toast toast;
+
+    private ArrayList<String> errors;
+
+    private String[] error_values;
+
+    private int scroll = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
 
-        this.questionTextView = (TextView) findViewById(R.id.question);
-        this.scoreTextView = (TextView) findViewById(R.id.score);
+        this.radioMale = (RadioButton) findViewById(R.id.radioMale);
+        this.radioFeMale = (RadioButton) findViewById(R.id.radioFemale);
 
-        this.answers = new boolean[10];
+        this.checkbox1 = (CheckBox) findViewById(R.id.checkbox1);
+        this.checkbox2 = (CheckBox) findViewById(R.id.checkbox2);
 
-        this.setQuestions();
-        this.askNextQuestion();
-        this.setScore();
+        this.question3 = (TextView) findViewById(R.id.question3answer);
+        this.question4 = (TextView) findViewById(R.id.question4answer);
+
+        this.scoreHead = (TextView) findViewById(R.id.scoreHead);
+
+        this.scrollView = (ScrollView) findViewById(R.id.scrollView);
+
+        this.error_values = getResources().getStringArray(R.array.errors);
+        this.score = ((TextView) findViewById(R.id.score));
     }
 
-    public boolean askNextQuestion() {
-        if (this.questions.length > this.questionNumber) {
-            this.questionNumber++;
+    public void submit(View view) {
+        this.errors = new ArrayList<>();
+        this.score.setVisibility(View.GONE);
+        this.scoreHead.setVisibility(View.GONE);
 
-            if (this.questionTextView != null)
-                this.questionTextView.setText(this.getQuestion());
+        String answer2 = this.getAnswer1();
+        String answer3 = this.getAnswer2();
+        String answer1 = this.getAnswer3();
+        int answer4 = this.getAnswer4();
 
-            return true;
-        }
-        return false;
+        TextView scroll = (TextView) findViewById(R.id.scoreHead);
 
-    }
+        if (this.errors.size() > 0) {
+            String errors = "";
 
-    public void setScore() {
-        if (this.score < 0) {
-            this.score = 0;
-        }
-        if (this.scoreTextView != null) {
-            this.scoreTextView.setText(getString(R.string.score, this.score));
-        } else {
-            Log.d("Score Failed", "Score: " + this.score);
-        }
-    }
-
-    public void submitAnswer(View view) {
-        this.answers[this.getQuestionNumber()] = view.getId() == R.id.yes;
-
-        Log.d("submit", this.getQuestionNumber() + ": " + this.getAnswer() + " " + this.getCorrectAnswer());
-
-        if (this.checkAnswers(this.getAnswer())) {
-            this.score++;
-        }
-        this.askNextQuestion();
-        this.setScore();
-
-    }
-
-    public void previous(View view) {
-        if (this.getQuestionNumber() >= 0) {
-            this.questionNumber -= this.getQuestionNumber() == 0 ? 1 : 2;
-
-            this.askNextQuestion();
-
-            if (this.getAnswer() == this.getCorrectAnswer()) {
-                this.score--;
+            for (String error : this.errors) {
+                errors = errors + "\n" + error;
             }
 
-            this.setScore();
+            int id;
+            switch (this.scroll) {
+                case 1:
+                    id = R.id.question1;
+                    break;
+                case 2:
+                    id = R.id.question2;
+                    break;
+                case 3:
+                    id = R.id.question3;
+                    break;
+                case 4:
+                    id = R.id.question4answer;
+                    break;
+                default:
+                    id = R.id.question1;
+            }
 
+            scroll = (TextView) findViewById(id);
+
+            this.scrollView.scrollTo(0, scroll.getBottom());
+            this.toast(errors);
+
+            return;
         }
+
+        this.score.setText(getResources().getString(R.string.score, answer1, answer2, answer3, answer4));
+        this.scoreHead.setVisibility(View.VISIBLE);
+        this.score.setVisibility(View.VISIBLE);
+        this.scrollView.scrollTo(0, scroll.getTop());
     }
 
-    public String getQuestion() {
-        return this.questions[this.getQuestionNumber()] + " ?";
+
+    public String getAnswer1() {
+        String gender;
+        if (this.radioMale.isChecked()) {
+            gender = "Male";
+        } else if (this.radioFeMale.isChecked()) {
+            gender = "Female";
+        } else {
+            this.addError(this.error_values[0]);
+            this.scroll = 1;
+            return null;
+        }
+        return gender;
     }
 
-    public void setQuestions() {
-        this.questions = new String[10];
-        this.questions[0] = "This is the first questions";
-        this.questions[1] = "This is the second questions";
-        this.questions[2] = "This is the third questions";
-        this.questions[3] = "This is the forth questions";
-        this.questions[4] = "This is the fifth questions";
-        this.questions[5] = "This is the sixth questions";
-        this.questions[6] = "This is the seventh questions";
-        this.questions[7] = "This is the eighth questions";
-        this.questions[8] = "This is the ninth questions";
-        this.questions[9] = "This is the tenth questions";
+    public String getAnswer2() {
+        String temp = "";
+        boolean checked = false;
 
-        this.setCorrectAnswers();
+        if (this.checkbox1.isChecked()) {
+            temp = "Male";
+            checked = true;
+        }
+        if (this.checkbox2.isChecked()) {
+            temp = temp.length() > 0 ? temp + ", Female" : "Female";
+            checked = true;
+        }
+        if (!checked) {
+            this.addError(this.error_values[1]);
+            this.scroll = 2;
+            return null;
+        }
+
+        return temp;
     }
 
-    public boolean checkAnswers(boolean answer) {
-        return this.correctAnswers[this.getQuestionNumber()] == answer;
+    public String getAnswer3() {
+        String answer = this.question3.getText().toString();
+        if (answer.length() == 0) {
+            this.addError(this.error_values[2]);
+            this.scroll = 3;
+            return null;
+        }
+
+        return answer;
     }
 
-    public int getQuestionNumber() {
-        return this.questionNumber - 1;
+    public int getAnswer4() {
+        int correctAnswer = 3;
+        String text = this.question4.getText().toString();
+        if (text.length() <= 0) {
+            this.addError(this.error_values[3]);
+            this.scroll = 4;
+            return 0;
+        }
+        int val = Integer.parseInt(text);
+
+        if (correctAnswer != val) {
+            this.addError(this.error_values[3]);
+            this.scroll = 3;
+        }
+
+        return val;
     }
 
-    public void setCorrectAnswers() {
-        this.correctAnswers = new boolean[10];
-
-        this.correctAnswers[0] = true;
-        this.correctAnswers[1] = true;
-        this.correctAnswers[2] = false;
-        this.correctAnswers[3] = true;
-        this.correctAnswers[4] = false;
-        this.correctAnswers[5] = true;
-        this.correctAnswers[6] = true;
-        this.correctAnswers[7] = false;
-        this.correctAnswers[8] = true;
-        this.correctAnswers[9] = false;
+    public void addError(String error) {
+        this.errors.add(error);
     }
 
-    public boolean getAnswer() {
-        return this.answers[this.getQuestionNumber()];
+    public void toast(String message) {
+        if (this.toast != null)
+            this.toast.cancel();
+
+        this.toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
+        this.toast.show();
     }
 
-    public boolean getAnswer(int question) {
-        return this.answers[question - 1];
-    }
-
-    public boolean getCorrectAnswer() {
-        return this.correctAnswers[this.getQuestionNumber()];
-    }
-
-    public boolean getCorrectAnswer(int question) {
-        return this.correctAnswers[question - 1];
-    }
 }
